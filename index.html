@@ -3,179 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colchonería - Tu Tienda de Colchones</title>
+    <title>Colchonería Central - Calidad y Confort</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-        body { background: #f5f5f5; }
-        header {
-            background: linear-gradient(135deg, #1a237e, #283593);
-            color: white; padding: 20px; text-align: center;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
         }
-        header h1 { font-size: 28px; margin-bottom: 5px; }
-        header p { opacity: 0.9; font-size: 14px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        /* Header elegante */
+        .header {
+            padding: 60px 20px 40px;
+            text-align: center;
+            background: linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
+            border-bottom: 1px solid #1a1a1a;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .header h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .header h1 span { color: #c9a84c; }
+        .header p {
+            color: #666;
+            font-size: 0.95em;
+            margin-top: 8px;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+        }
+        .header .wa-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 12px 28px;
+            background: #25D366;
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        .header .wa-top:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Grid de productos */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 16px;
+        }
+
         .productos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            margin-top: 20px;
         }
+
         .producto {
-            background: white;
-            border-radius: 12px;
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
         }
-        .producto:hover { transform: translateY(-3px); }
+        .producto:hover {
+            border-color: #c9a84c;
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(201, 168, 76, 0.05);
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .producto img {
             width: 100%;
-            height: 220px;
+            height: 240px;
             object-fit: cover;
-            background: #e0e0e0;
+            background: #1a1a1a;
+            transition: transform 0.5s;
         }
-        .info { padding: 15px; }
-        .info h3 { font-size: 18px; margin-bottom: 5px; }
-        .info .descripcion { color: #666; font-size: 13px; margin-bottom: 10px; }
-        .info .precio { font-size: 24px; font-weight: bold; color: #1a237e; margin-bottom: 10px; }
-        .info .precio small { font-size: 14px; font-weight: normal; color: #999; }
-        .whatsapp-btn {
+        .producto:hover img { transform: scale(1.03); }
+
+        .info {
+            padding: 20px;
+        }
+        .info h3 {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        .info .descripcion {
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            font-weight: 300;
+        }
+        .info .precio {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #c9a84c;
+            margin-bottom: 15px;
+        }
+        .info .precio small {
+            font-size: 0.45em;
+            font-weight: 300;
+            color: #555;
+        }
+
+        .btn-wa {
             display: block;
             background: #25D366;
-            color: white;
+            color: #000;
             text-align: center;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            transition: background 0.2s;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s;
         }
-        .whatsapp-btn:hover { background: #1da851; }
+        .btn-wa:hover {
+            background: #1da851;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.2);
+        }
+
+        /* Loader */
+        .loader {
+            text-align: center;
+            padding: 40px;
+            color: #333;
+            font-size: 0.9em;
+        }
+        .loader .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #1a1a1a;
+            border-top-color: #c9a84c;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Footer */
         footer {
             text-align: center;
-            padding: 30px;
-            color: #999;
-            font-size: 13px;
+            padding: 40px 20px;
+            color: #333;
+            font-size: 0.8em;
+            border-top: 1px solid #111;
+            font-weight: 300;
         }
-        .aviso {
-            background: #fff3cd;
-            color: #856404;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            font-size: 13px;
+        footer strong { color: #555; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header { padding: 40px 20px 30px; }
+            .header h1 { font-size: 1.6em; }
+            .productos { grid-template-columns: 1fr; gap: 16px; }
+            .info h3 { font-size: 1em; }
+            .info .precio { font-size: 1.3em; }
+        }
+        @media (min-width: 768px) {
+            .productos { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .productos { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>🛏️ Colchonería Central</h1>
-    <p>Los mejores colchones al mejor precio</p>
-</header>
+<div class="header">
+    <h1>🛏️ Colchonería <span>Central</span></h1>
+    <p>Calidad y confort para tu descanso · Entregas en Medellín y toda Colombia</p>
+    <a class="wa-top" href="https://wa.me/573004515809" target="_blank">
+        💬 Escríbenos por WhatsApp
+    </a>
+</div>
 
 <div class="container">
-    <div class="aviso">
-        💬 Escríbenos por WhatsApp para comprar o consultar disponibilidad
-    </div>
-    <div class="productos" id="productos">
-        <!-- Los productos se cargan aquí -->
+    <div class="productos" id="productos"></div>
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p>Cargando más productos...</p>
     </div>
 </div>
 
 <footer>
-    <p>Colchonería Central © 2026 - Entregas en toda Colombia</p>
+    <p><strong>Colchonería Central</strong> © 2026 · Medellín, Colombia</p>
+    <p style="margin-top:5px;">📱 <a href="https://wa.me/573004515809" style="color:#555;text-decoration:none;">+57 300 451 5809</a></p>
 </footer>
 
 <script>
-    // CAMBIA ESTE NÚMERO POR TU WHATSAPP
     const WHATSAPP_NUMBER = "573004515809";
 
-    // Imágenes random de colchones (placeholder)
-    const IMAGENES = [
-        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400",
-        "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=400",
-        "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=400",
-        "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=400",
-        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400",
-        "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400",
-        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400",
-        "https://images.unsplash.com/photo-1582582621959-48d27397dc69?w=400"
+    // Todos los productos
+    const todosProductos = [
+        { nombre: "Colchón Ortopédico Premium", descripcion: "Espuma viscoelástica de alta densidad. Alivia dolores de espalda y presión.", precio: 450000, img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600" },
+        { nombre: "Colchón Resorte Ensacado", descripcion: "Resortes independientes que se adaptan a cada curva del cuerpo. Sin transferencia de movimiento.", precio: 580000, img: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600" },
+        { nombre: "Colchón Económico Familiar", descripcion: "Excelente relación calidad-precio. Resistente y cómodo para uso diario.", precio: 280000, img: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600" },
+        { nombre: "Colchón Doble Espuma", descripcion: "Doble capa de espuma de alta densidad. Firmeza equilibrada para descanso profundo.", precio: 380000, img: "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=600" },
+        { nombre: "Colchón Hotelero Premium", descripcion: "Calidad 5 estrellas. Tela suave, soporte superior, confort absoluto.", precio: 720000, img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600" },
+        { nombre: "Colchón Infantil Antialérgico", descripcion: "Hipoalergénico, transpirable y libre de químicos. Ideal para niños.", precio: 320000, img: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600" },
+        { nombre: "Colchón King Size", descripcion: "Tamaño king con espuma viscoelástica. Máximo lujo y espacio.", precio: 890000, img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600" },
+        { nombre: "Colchón Box Spring", descripcion: "Base y colchón integrados. Diseño moderno, estructura reforzada.", precio: 650000, img: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?w=600" },
+        { nombre: "Colchón Viscoelástico Premium", descripcion: "Memoria de forma 3D. Se adapta a tu cuerpo y recupera su forma original.", precio: 520000, img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600" },
+        { nombre: "Colchón Bambú Natural", descripcion: "Funda de bambú ecológica. Fresco, antibacteriano y sostenible.", precio: 480000, img: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600" },
+        { nombre: "Colchón Sistema Airflow", descripcion: "Tecnología de ventilación interna. Colchón fresco todo el año.", precio: 610000, img: "https://images.unsplash.com/photo-1505692952047-1a78307d8eaa?w=600" },
+        { nombre: "Colchón Para Colchoneta", descripcion: "Colchón plegable multiusos. Ideal para invitados o camping.", precio: 220000, img: "https://images.unsplash.com/photo-1604147495798-57beb5d6af73?w=600" }
     ];
 
-    function getRandomImage() {
-        return IMAGENES[Math.floor(Math.random() * IMAGENES.length)];
-    }
+    // Scroll infinito: cuántos mostrar por tanda
+    const POR_TANDA = 6;
+    let mostrados = 0;
+    let cargando = false;
 
-    // PRODUCTOS - EDÍTALOS AQUÍ
-    const productos = [
-        {
-            nombre: "Colchón Ortopédico Premium",
-            descripcion: "Colchón ortopédico de espuma viscoelástica. Alivia dolores de espalda.",
-            precio: 450000
-        },
-        {
-            nombre: "Colchón Resorte Ensacado",
-            descripcion: "Sistema de resortes independientes para máximo confort y durabilidad.",
-            precio: 580000
-        },
-        {
-            nombre: "Colchón Económico Familiar",
-            descripcion: "Excelente relación calidad-precio. Ideal para uso diario.",
-            precio: 280000
-        },
-        {
-            nombre: "Colchón Doble Espuma",
-            descripcion: "Doble capa de espuma de alta densidad para descanso profundo.",
-            precio: 380000
-        },
-        {
-            nombre: "Colchón Hotelero Premium",
-            descripcion: "Calidad hotelera 5 estrellas. Confort superior.",
-            precio: 720000
-        },
-        {
-            nombre: "Colchón Infantil Antialérgico",
-            descripcion: "Especial para niños. Hipoalergénico y transpirable.",
-            precio: 320000
-        },
-        {
-            nombre: "Colchón King Size",
-            descripcion: "Tamaño king con espalla de memoria. Máximo lujo.",
-            precio: 890000
-        },
-        {
-            nombre: "Colchón Box Spring",
-            descripcion: "Base + colchón integrado. Moderno y resistente.",
-            precio: 650000
-        }
-    ];
-
-    function renderizar() {
-        const contenedor = document.getElementById('productos');
-        contenedor.innerHTML = productos.map(p => {
-            const img = getRandomImage();
-            const mensaje = encodeURIComponent(
-                `Hola, quiero comprar el *${p.nombre}* ($${p.precio.toLocaleString()})`
-            );
-            return `
-                <div class="producto">
-                    <img src="${img}" alt="${p.nombre}" loading="lazy">
-                    <div class="info">
-                        <h3>${p.nombre}</h3>
-                        <p class="descripcion">${p.descripcion}</p>
-                        <p class="precio">$${p.precio.toLocaleString()} <small>+ envío</small></p>
-                        <a class="whatsapp-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}" target="_blank">
-                            💬 Comprar por WhatsApp
-                        </a>
-                    </div>
+    function crearProductoHTML(p) {
+        const mensaje = encodeURIComponent(`Hola, quiero comprar el *${p.nombre}* ($${p.precio.toLocaleString()})`);
+        return `
+            <div class="producto">
+                <img src="${p.img}" alt="${p.nombre}" loading="lazy">
+                <div class="info">
+                    <h3>${p.nombre}</h3>
+                    <p class="descripcion">${p.descripcion}</p>
+                    <p class="precio">$${p.precio.toLocaleString()} <small>+ envío</small></p>
+                    <a class="btn-wa" href="https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}" target="_blank">
+                        💬 Comprar por WhatsApp
+                    </a>
                 </div>
-            `;
-        }).join('');
+            </div>
+        `;
     }
 
-    renderizar();
+    function cargarMas() {
+        if (cargando || mostrados >= todosProductos.length) {
+            document.getElementById('loader').style.display = 'none';
+            return;
+        }
+        cargando = true;
+        document.getElementById('loader').style.display = 'block';
+
+        const contenedor = document.getElementById('productos');
+        const fin = Math.min(mostrados + POR_TANDA, todosProductos.length);
+
+        // Simular carga para efecto smooth
+        setTimeout(() => {
+            for (let i = mostrados; i < fin; i++) {
+                contenedor.insertAdjacentHTML('beforeend', crearProductoHTML(todosProductos[i]));
+            }
+            mostrados = fin;
+            cargando = false;
+
+            if (mostrados >= todosProductos.length) {
+                document.getElementById('loader').innerHTML = '<p style="color:#333;">✨ Todos los productos cargados</p>';
+            } else {
+                document.getElementById('loader').style.display = 'block';
+            }
+        }, 300);
+    }
+
+    // Scroll listener
+    window.addEventListener('scroll', () => {
+        const loader = document.getElementById('loader');
+        if (!loader) return;
+        const rect = loader.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 100) {
+            cargarMas();
+        }
+    });
+
+    // Cargar primera tanda
+    cargarMas();
 </script>
 </body>
 </html>
