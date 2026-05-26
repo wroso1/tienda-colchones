@@ -2,314 +2,325 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colchonería Central - Calidad y Confort</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Colchonería Central</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
+            background: #000;
             color: #fff;
-            min-height: 100vh;
+            overscroll-behavior: none;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
-        /* Header elegante */
-        .header {
-            padding: 60px 20px 40px;
-            text-align: center;
-            background: linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
-            border-bottom: 1px solid #1a1a1a;
+        /* Contenedor principal — scroll vertical tipo reels */
+        .reels-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .reels-container::-webkit-scrollbar { display: none; }
+
+        /* Cada reel = pantalla completa */
+        .reel {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
             position: relative;
+            background: #000;
             overflow: hidden;
         }
-        .header::before {
+
+        /* Imagen de fondo */
+        .reel-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            z-index: 0;
+            transition: opacity 0.5s;
+        }
+
+        /* Gradiente overlay */
+        .reel::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 60%);
-            animation: pulse 8s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-        .header h1 {
-            font-size: 2.2em;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 1;
-        }
-        .header h1 span { color: #c9a84c; }
-        .header p {
-            color: #666;
-            font-size: 0.95em;
-            margin-top: 8px;
-            position: relative;
-            z-index: 1;
-            font-weight: 300;
-        }
-        .header .wa-top {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 12px 28px;
-            background: #25D366;
-            color: #000;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95em;
-            transition: all 0.3s;
-            position: relative;
-            z-index: 1;
-        }
-        .header .wa-top:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(37, 211, 102, 0.3);
-        }
-
-        /* Grid de productos */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px 16px;
-        }
-
-        .productos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .producto {
-            background: #111;
-            border: 1px solid #1a1a1a;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-        .producto:hover {
-            border-color: #c9a84c;
-            transform: translateY(-6px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(201, 168, 76, 0.05);
-        }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .producto img {
+            bottom: 0;
+            left: 0;
             width: 100%;
-            height: 240px;
-            object-fit: cover;
-            background: #1a1a1a;
-            transition: transform 0.5s;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            z-index: 1;
+            pointer-events: none;
         }
-        .producto:hover img { transform: scale(1.03); }
 
-        .info {
-            padding: 20px;
+        /* Contenido sobre la imagen */
+        .reel-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 500px;
+            width: 100%;
         }
-        .info h3 {
-            font-size: 1.15em;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #fff;
-        }
-        .info .descripcion {
-            color: #666;
-            font-size: 0.85em;
-            line-height: 1.5;
-            margin-bottom: 12px;
-            font-weight: 300;
-        }
-        .info .precio {
-            font-size: 1.6em;
-            font-weight: 700;
+
+        .reel-content .tag {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(201, 168, 76, 0.2);
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            border-radius: 50px;
             color: #c9a84c;
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             margin-bottom: 15px;
         }
-        .info .precio small {
-            font-size: 0.45em;
+
+        .reel-content h2 {
+            font-size: 2em;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+        .reel-content .desc {
+            color: #aaa;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 20px;
             font-weight: 300;
-            color: #555;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .reel-content .precio {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #c9a84c;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+        .reel-content .precio small {
+            font-size: 0.35em;
+            font-weight: 300;
+            color: #666;
         }
 
-        .btn-wa {
-            display: block;
+        .btn-wa-reel {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             background: #25D366;
             color: #000;
-            text-align: center;
-            padding: 14px;
-            border-radius: 10px;
+            padding: 16px 36px;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95em;
+            font-weight: 700;
+            font-size: 1.05em;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            max-width: 320px;
+        }
+        .btn-wa-reel:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 40px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Indicador de posición */
+        .indicador {
+            position: fixed;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+        }
+        .indicador .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
             transition: all 0.3s;
         }
-        .btn-wa:hover {
-            background: #1da851;
-            box-shadow: 0 0 20px rgba(37, 211, 102, 0.2);
+        .indicador .dot.active {
+            background: #c9a84c;
+            width: 8px;
+            height: 8px;
+            box-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
         }
 
-        /* Loader */
-        .loader {
-            text-align: center;
-            padding: 40px;
-            color: #333;
-            font-size: 0.9em;
+        /* Header flotante */
+        .header-flotante {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            padding: 16px 20px;
+            background: linear-gradient(rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .loader .spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 2px solid #1a1a1a;
-            border-top-color: #c9a84c;
+        .header-flotante h1 {
+            font-size: 1em;
+            font-weight: 700;
+        }
+        .header-flotante h1 span { color: #c9a84c; }
+        .header-flotante .wa-icon {
+            width: 40px;
+            height: 40px;
+            background: #25D366;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2em;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #333;
-            font-size: 0.8em;
-            border-top: 1px solid #111;
-            font-weight: 300;
+        /* Navegación táctil */
+        .swipe-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.75em;
+            animation: bounce 2s infinite;
+            pointer-events: none;
         }
-        footer strong { color: #555; }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
 
         /* Responsive */
         @media (max-width: 600px) {
-            .header { padding: 40px 20px 30px; }
-            .header h1 { font-size: 1.6em; }
-            .productos { grid-template-columns: 1fr; gap: 16px; }
-            .info h3 { font-size: 1em; }
-            .info .precio { font-size: 1.3em; }
+            .reel-content h2 { font-size: 1.5em; }
+            .reel-content .precio { font-size: 2em; }
+            .reel-content .desc { font-size: 0.85em; }
+            .btn-wa-reel { padding: 14px 30px; font-size: 0.95em; }
+            .header-flotante h1 { font-size: 0.85em; }
         }
         @media (min-width: 768px) {
-            .productos { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 1024px) {
-            .productos { grid-template-columns: repeat(3, 1fr); }
+            .reel-content { max-width: 600px; }
         }
     </style>
 </head>
 <body>
 
-<div class="header">
+<!-- Header flotante -->
+<div class="header-flotante">
     <h1>🛏️ Colchonería <span>Central</span></h1>
-    <p>Calidad y confort para tu descanso · Entregas en Medellín y toda Colombia</p>
-    <a class="wa-top" href="https://wa.me/573004515809" target="_blank">
-        💬 Escríbenos por WhatsApp
-    </a>
+    <a class="wa-icon" href="https://wa.me/573004515809" target="_blank">💬</a>
 </div>
 
-<div class="container">
-    <div class="productos" id="productos"></div>
-    <div class="loader" id="loader">
-        <div class="spinner"></div>
-        <p>Cargando más productos...</p>
-    </div>
+<!-- Indicador de posición -->
+<div class="indicador" id="indicador"></div>
+
+<!-- Scroll vertical tipo reels -->
+<div class="reels-container" id="reelsContainer">
+
 </div>
 
-<footer>
-    <p><strong>Colchonería Central</strong> © 2026 · Medellín, Colombia</p>
-    <p style="margin-top:5px;">📱 <a href="https://wa.me/573004515809" style="color:#555;text-decoration:none;">+57 300 451 5809</a></p>
-</footer>
+<!-- Hint swipe -->
+<div class="swipe-hint" id="swipeHint">⬆️ Desliza para ver más</div>
 
 <script>
     const WHATSAPP_NUMBER = "573004515809";
 
-    // Todos los productos
-    const todosProductos = [
-        { nombre: "🔥 Combo #1", descripcion: "Base cama + Colchón semi ortopédico + 2 Almohadas", precio: 480000, img: "img/colchon-1.jpg" },
-        { nombre: "Colchón Resorte Ensacado", descripcion: "Resortes independientes que se adaptan a cada curva del cuerpo. Sin transferencia de movimiento.", precio: 580000, img: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600" },
-        { nombre: "Colchón Económico Familiar", descripcion: "Excelente relación calidad-precio. Resistente y cómodo para uso diario.", precio: 280000, img: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600" },
-        { nombre: "Colchón Doble Espuma", descripcion: "Doble capa de espuma de alta densidad. Firmeza equilibrada para descanso profundo.", precio: 380000, img: "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=600" },
-        { nombre: "Colchón Hotelero Premium", descripcion: "Calidad 5 estrellas. Tela suave, soporte superior, confort absoluto.", precio: 720000, img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600" },
-        { nombre: "Colchón Infantil Antialérgico", descripcion: "Hipoalergénico, transpirable y libre de químicos. Ideal para niños.", precio: 320000, img: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600" },
-        { nombre: "Colchón King Size", descripcion: "Tamaño king con espuma viscoelástica. Máximo lujo y espacio.", precio: 890000, img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600" },
-        { nombre: "Colchón Box Spring", descripcion: "Base y colchón integrados. Diseño moderno, estructura reforzada.", precio: 650000, img: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?w=600" },
-        { nombre: "Colchón Viscoelástico Premium", descripcion: "Memoria de forma 3D. Se adapta a tu cuerpo y recupera su forma original.", precio: 520000, img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600" },
-        { nombre: "Colchón Bambú Natural", descripcion: "Funda de bambú ecológica. Fresco, antibacteriano y sostenible.", precio: 480000, img: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600" },
-        { nombre: "Colchón Sistema Airflow", descripcion: "Tecnología de ventilación interna. Colchón fresco todo el año.", precio: 610000, img: "https://images.unsplash.com/photo-1505692952047-1a78307d8eaa?w=600" },
-        { nombre: "Colchón Plegable Multiusos", descripcion: "Colchón plegable multiusos. Ideal para invitados o camping.", precio: 220000, img: "https://images.unsplash.com/photo-1604147495798-57beb5d6af73?w=600" }
+    const productos = [
+        { nombre: "🔥 Combo #1", descripcion: "Base cama + Colchón semi ortopédico + 2 Almohadas", precio: 480000, img: "img/colchon-1.jpg", badge: "Oferta" },
+        { nombre: "Colchón Resorte Ensacado", descripcion: "Resortes independientes que se adaptan a cada curva del cuerpo. Sin transferencia de movimiento.", precio: 580000, img: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800", badge: "Recomendado" },
+        { nombre: "Colchón Económico Familiar", descripcion: "Excelente relación calidad-precio. Resistente y cómodo para uso diario.", precio: 280000, img: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800", badge: "Económico" },
+        { nombre: "Colchón Doble Espuma", descripcion: "Doble capa de espuma de alta densidad. Firmeza equilibrada para descanso profundo.", precio: 380000, img: "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=800", badge: "Popular" },
+        { nombre: "Colchón Hotelero Premium", descripcion: "Calidad 5 estrellas. Tela suave, soporte superior, confort absoluto.", precio: 720000, img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800", badge: "Premium" },
+        { nombre: "Colchón Infantil Antialérgico", descripcion: "Hipoalergénico, transpirable y libre de químicos. Ideal para niños.", precio: 320000, img: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800", badge: "Infantil" },
+        { nombre: "Colchón King Size", descripcion: "Tamaño king con espuma viscoelástica. Máximo lujo y espacio para dos personas.", precio: 890000, img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800", badge: "Supremo" },
+        { nombre: "Colchón Box Spring", descripcion: "Base y colchón integrados. Diseño moderno con estructura reforzada.", precio: 650000, img: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?w=800", badge: "Moderno" },
+        { nombre: "Colchón Viscoelástico Premium", descripcion: "Memoria de forma 3D. Se adapta a tu cuerpo y recupera su forma original.", precio: 520000, img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800", badge: "Nuevo" },
+        { nombre: "Colchón Bambú Natural", descripcion: "Funda de bambú ecológica. Fresco, antibacteriano, sostenible.", precio: 480000, img: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800", badge: "Ecológico" },
+        { nombre: "Colchón Sistema Airflow", descripcion: "Tecnología de ventilación interna. Colchón fresco y transpirable todo el año.", precio: 610000, img: "https://images.unsplash.com/photo-1505692952047-1a78307d8eaa?w=800", badge: "Fresco" },
+        { nombre: "Colchón Plegable Multiusos", descripcion: "Colchón plegable multiusos. Ideal para invitados, camping o espacios pequeños.", precio: 220000, img: "https://images.unsplash.com/photo-1604147495798-57beb5d6af73?w=800", badge: "Multiusos" }
     ];
 
-    // Scroll infinito: cuántos mostrar por tanda
-    const POR_TANDA = 6;
-    let mostrados = 0;
-    let cargando = false;
+    // Crear los reels
+    const container = document.getElementById('reelsContainer');
+    const indicador = document.getElementById('indicador');
 
-    function crearProductoHTML(p) {
+    productos.forEach((p, i) => {
         const mensaje = encodeURIComponent(`Hola, quiero comprar el *${p.nombre}* ($${p.precio.toLocaleString()})`);
-        return `
-            <div class="producto">
-                <img src="${p.img}" alt="${p.nombre}" loading="lazy">
-                <div class="info">
-                    <h3>${p.nombre}</h3>
-                    <p class="descripcion">${p.descripcion}</p>
-                    <p class="precio">$${p.precio.toLocaleString()} <small>+ envío</small></p>
-                    <a class="btn-wa" href="https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}" target="_blank">
-                        💬 Comprar por WhatsApp
-                    </a>
-                </div>
+
+        const reel = document.createElement('div');
+        reel.className = 'reel';
+        reel.innerHTML = `
+            <img class="reel-bg" src="${p.img}" alt="${p.nombre}" loading="${i === 0 ? 'eager' : 'lazy'}">
+            <div class="reel-content">
+                <div class="tag">${p.badge}</div>
+                <h2>${p.nombre}</h2>
+                <p class="desc">${p.descripcion}</p>
+                <p class="precio">$${p.precio.toLocaleString()} <small>+ envío</small></p>
+                <a class="btn-wa-reel" href="https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}" target="_blank">
+                    💬 Comprar por WhatsApp
+                </a>
             </div>
         `;
-    }
+        container.appendChild(reel);
 
-    function cargarMas() {
-        if (cargando || mostrados >= todosProductos.length) {
-            document.getElementById('loader').style.display = 'none';
-            return;
-        }
-        cargando = true;
-        document.getElementById('loader').style.display = 'block';
+        // Indicador
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        indicador.appendChild(dot);
+    });
 
-        const contenedor = document.getElementById('productos');
-        const fin = Math.min(mostrados + POR_TANDA, todosProductos.length);
+    // Actualizar indicador con el scroll
+    container.addEventListener('scroll', () => {
+        const h = container.clientHeight;
+        const scrollTop = container.scrollTop;
+        const idx = Math.round(scrollTop / h);
 
-        // Simular carga para efecto smooth
-        setTimeout(() => {
-            for (let i = mostrados; i < fin; i++) {
-                contenedor.insertAdjacentHTML('beforeend', crearProductoHTML(todosProductos[i]));
-            }
-            mostrados = fin;
-            cargando = false;
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i === idx);
+        });
 
-            if (mostrados >= todosProductos.length) {
-                document.getElementById('loader').innerHTML = '<p style="color:#333;">✨ Todos los productos cargados</p>';
-            } else {
-                document.getElementById('loader').style.display = 'block';
-            }
-        }, 300);
-    }
-
-    // Scroll listener
-    window.addEventListener('scroll', () => {
-        const loader = document.getElementById('loader');
-        if (!loader) return;
-        const rect = loader.getBoundingClientRect();
-        if (rect.top < window.innerHeight + 100) {
-            cargarMas();
+        // Ocultar hint después del primer scroll
+        const hint = document.getElementById('swipeHint');
+        if (scrollTop > 10) {
+            hint.style.opacity = '0';
+            hint.style.transition = 'opacity 0.5s';
         }
     });
 
-    // Cargar primera tanda
-    cargarMas();
+    // Detectar si es touch para mostrar hint
+    if ('ontouchstart' in window) {
+        document.getElementById('swipeHint').style.display = 'block';
+    } else {
+        document.getElementById('swipeHint').style.display = 'none';
+    }
 </script>
 </body>
 </html>
