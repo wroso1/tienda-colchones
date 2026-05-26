@@ -240,29 +240,10 @@
 </div>
 
 <!-- Indicador de posición -->
-<div class="indicador" id="indicador">
-    <div class="dot active"></div>
-</div>
+<div class="indicador" id="indicador"></div>
 
 <!-- Scroll vertical tipo reels -->
 <div class="reels-container" id="reelsContainer">
-
-<!-- Hero reel estático -->
-<div class="reel">
-    <img class="reel-bg" src="img/principal.jpg" alt="Makley" style="opacity: 0.85; object-fit: cover;">
-    <div class="reel-content" style="display: flex; flex-direction: column; align-items: center;">
-        <div class="tag" style="font-size: 0.85em; letter-spacing: 2px;">🛏️ MAKLEY</div>
-        <h2 style="font-size: 2.8em; font-weight: 800; line-height: 1.15; color: #c9a84c; text-shadow: 0 4px 30px rgba(0,0,0,0.8); margin-bottom: 5px;">
-            El descanso<br>que mereces,<br>cada noche
-        </h2>
-        <p style="color: #ddd; font-size: 1em; font-weight: 300; margin: 15px 0 25px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
-            Colchones de calidad • Envío a toda Medellín
-        </p>
-        <a class="btn-wa-reel" href="https://wa.me/573004515809?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20sus%20colchones" target="_blank" style="background: #c9a84c; color: #000;">
-            📱 Ver catálogo
-        </a>
-    </div>
-</div>
 
 </div>
 
@@ -271,6 +252,31 @@
 
 <script>
     const WHATSAPP_NUMBER = "573004515809";
+
+    // Hero principal — Makley
+    const hero = document.createElement('div');
+    hero.className = 'reel';
+    hero.innerHTML = `
+        <img class="reel-bg" src="img/principal.jpg" alt="Makley - El descanso que mereces" style="opacity: 0.85;">
+        <div class="reel-content" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="tag" style="font-size: 0.85em; letter-spacing: 2px;">🛏️ MAKLEY</div>
+            <h2 style="font-size: 2.8em; font-weight: 800; line-height: 1.15; color: #c9a84c; text-shadow: 0 4px 30px rgba(0,0,0,0.8); margin-bottom: 5px;">
+                El descanso<br>que mereces,<br>cada noche
+            </h2>
+            <p style="color: #ddd; font-size: 1em; font-weight: 300; margin: 15px 0 25px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                Colchones de calidad • Envío a toda Medellín
+            </p>
+            <a class="btn-wa-reel" href="https://wa.me/573004515809?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20sus%20colchones" target="_blank" style="background: #c9a84c; color: #000;">
+                📱 Ver catálogo
+            </a>
+        </div>
+    `;
+    container.appendChild(hero);
+
+    // Indicador (dot adicional para el hero)
+    const heroDot = document.createElement('div');
+    heroDot.className = 'dot active';
+    indicador.appendChild(heroDot);
 
     const productos = [
         { nombre: "🔥 Combo #1", descripcion: "Base cama + Colchón semi ortopédico + 2 Almohadas", precio: 480000, img: "img/colchon-1.jpg", badge: "Oferta" },
@@ -297,7 +303,7 @@
         const reel = document.createElement('div');
         reel.className = 'reel';
         reel.innerHTML = `
-            <img class="reel-bg" src="${p.img}" alt="${p.nombre}" loading="lazy">
+            <img class="reel-bg" src="${p.img}" alt="${p.nombre}" loading="${i === 0 ? 'eager' : 'lazy'}">
             <div class="reel-content">
                 <div class="tag">${p.badge}</div>
                 <h2>${p.nombre}</h2>
@@ -312,7 +318,7 @@
 
         // Indicador
         const dot = document.createElement('div');
-        dot.className = 'dot';
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
         indicador.appendChild(dot);
     });
 
