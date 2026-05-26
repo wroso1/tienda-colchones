@@ -111,9 +111,10 @@
     // PRODUCTOS - EDÍTALOS AQUÍ
     const productos = [
         {
-            nombre: "Colchón Ortopédico Premium",
-            descripcion: "Colchón ortopédico de espuma viscoelástica. Alivia dolores de espalda.",
-            precio: 450000
+            nombre: "🔥 Combo #1",
+            descripcion: "Base cama + Colchón semi ortopédico + 2 Almohadas",
+            precio: 480000,
+            img: "img/colchon-1.jpg"
         },
         {
             nombre: "Colchón Resorte Ensacado",
@@ -155,7 +156,7 @@
     function renderizar() {
         const contenedor = document.getElementById('productos');
         contenedor.innerHTML = productos.map(p => {
-            const img = getRandomImage();
+            const img = p.img || getRandomImage();
             const mensaje = encodeURIComponent(
                 `Hola, quiero comprar el *${p.nombre}* ($${p.precio.toLocaleString()})`
             );
