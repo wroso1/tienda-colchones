@@ -19,7 +19,6 @@
             left: 0;
         }
 
-        /* Contenedor principal — scroll vertical tipo reels */
         .reels-container {
             height: 100vh;
             width: 100vw;
@@ -30,7 +29,6 @@
         }
         .reels-container::-webkit-scrollbar { display: none; }
 
-        /* Cada reel = pantalla completa */
         .reel {
             height: 100vh;
             width: 100vw;
@@ -45,7 +43,6 @@
             overflow: hidden;
         }
 
-        /* Imagen de fondo */
         .reel-bg {
             position: absolute;
             top: 0; left: 0;
@@ -57,7 +54,6 @@
             transition: opacity 0.5s;
         }
 
-        /* Gradiente overlay */
         .reel::after {
             content: '';
             position: absolute;
@@ -70,7 +66,6 @@
             pointer-events: none;
         }
 
-        /* Contenido sobre la imagen */
         .reel-content {
             position: relative;
             z-index: 2;
@@ -95,7 +90,7 @@
         }
 
         .reel-content h2 {
-            font-size: 2em;
+            font-size: 1.6em;
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 10px;
@@ -145,7 +140,6 @@
             box-shadow: 0 0 40px rgba(37, 211, 102, 0.3);
         }
 
-        /* Indicador de posición */
         .indicador {
             position: fixed;
             right: 16px;
@@ -171,7 +165,6 @@
             box-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
         }
 
-        /* Header flotante */
         .header-flotante {
             position: fixed;
             top: 0;
@@ -201,7 +194,6 @@
             font-size: 1.2em;
         }
 
-        /* Navegación táctil */
         .swipe-hint {
             position: fixed;
             bottom: 30px;
@@ -218,9 +210,8 @@
             50% { transform: translateX(-50%) translateY(8px); }
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
-            .reel-content h2 { font-size: 1.5em; }
+            .reel-content h2 { font-size: 1.3em; }
             .reel-content .precio { font-size: 2em; }
             .reel-content .desc { font-size: 0.85em; }
             .btn-wa-reel { padding: 14px 30px; font-size: 0.95em; }
@@ -233,42 +224,31 @@
 </head>
 <body>
 
-<!-- Header flotante -->
 <div class="header-flotante">
     <h1>🛏️ Colchonería <span>Central</span></h1>
     <a class="wa-icon" href="https://wa.me/573004515809" target="_blank">💬</a>
 </div>
 
-<!-- Indicador de posición -->
 <div class="indicador" id="indicador"></div>
 
-<!-- Scroll vertical tipo reels -->
 <div class="reels-container" id="reelsContainer">
-
 </div>
 
-<!-- Hint swipe -->
 <div class="swipe-hint" id="swipeHint">⬆️ Desliza para ver más</div>
 
 <script>
     const WHATSAPP_NUMBER = "573004515809";
 
     const productos = [
-        { nombre: "🔥 Combo #1", descripcion: "Base cama + Colchón semi ortopédico + 2 Almohadas", precio: 480000, img: "img/colchon-1.jpg", badge: "Oferta" },
-        { nombre: "Colchón Resorte Ensacado", descripcion: "Resortes independientes que se adaptan a cada curva del cuerpo. Sin transferencia de movimiento.", precio: 580000, img: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800", badge: "Recomendado" },
-        { nombre: "Colchón Económico Familiar", descripcion: "Excelente relación calidad-precio. Resistente y cómodo para uso diario.", precio: 280000, img: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800", badge: "Económico" },
-        { nombre: "Colchón Doble Espuma", descripcion: "Doble capa de espuma de alta densidad. Firmeza equilibrada para descanso profundo.", precio: 380000, img: "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=800", badge: "Popular" },
-        { nombre: "Colchón Hotelero Premium", descripcion: "Calidad 5 estrellas. Tela suave, soporte superior, confort absoluto.", precio: 720000, img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800", badge: "Premium" },
-        { nombre: "Colchón Infantil Antialérgico", descripcion: "Hipoalergénico, transpirable y libre de químicos. Ideal para niños.", precio: 320000, img: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800", badge: "Infantil" },
-        { nombre: "Colchón King Size", descripcion: "Tamaño king con espuma viscoelástica. Máximo lujo y espacio para dos personas.", precio: 890000, img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800", badge: "Supremo" },
-        { nombre: "Colchón Box Spring", descripcion: "Base y colchón integrados. Diseño moderno con estructura reforzada.", precio: 650000, img: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?w=800", badge: "Moderno" },
-        { nombre: "Colchón Viscoelástico Premium", descripcion: "Memoria de forma 3D. Se adapta a tu cuerpo y recupera su forma original.", precio: 520000, img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800", badge: "Nuevo" },
-        { nombre: "Colchón Bambú Natural", descripcion: "Funda de bambú ecológica. Fresco, antibacteriano, sostenible.", precio: 480000, img: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800", badge: "Ecológico" },
-        { nombre: "Colchón Sistema Airflow", descripcion: "Tecnología de ventilación interna. Colchón fresco y transpirable todo el año.", precio: 610000, img: "https://images.unsplash.com/photo-1505692952047-1a78307d8eaa?w=800", badge: "Fresco" },
-        { nombre: "Colchón Plegable Multiusos", descripcion: "Colchón plegable multiusos. Ideal para invitados, camping o espacios pequeños.", precio: 220000, img: "https://images.unsplash.com/photo-1604147495798-57beb5d6af73?w=800", badge: "Multiusos" }
+        { nombre: "🔥 Base + Colchón Ortopédico + Espaldar", descripcion: "Completo set de base cama, colchón ortopédico y espaldar acolchado. La mejor relación calidad-precio.", precio: 750000, img: "img/combo-base-espaldar.jpg", badge: "Más vendido" },
+        { nombre: "🔥 Cama Nube con Espaldar y Colchón Ortopédico", descripcion: "Cama nube moderna con espaldar tapizado y colchón ortopédico de alta densidad. Diseño elegante.", precio: 1300000, img: "img/cama-nube-1300.jpg", badge: "Nube" },
+        { nombre: "🔥 Cama Nube con Colchón Semi Ortopédico", descripcion: "Cama nube con espaldar y colchón semi ortopédico. Combinación de confort y soporte.", precio: 1600000, img: "img/cama-nube-1600.jpg", badge: "Nube Premium" },
+        { nombre: "Base Cama + Espaldar + Colchón Ortopédico", descripcion: "Base resistente, espaldar acolchado y colchón ortopédico. Set completo a precio especial.", precio: 750000, img: "img/base-espaldar-750a.jpg", badge: "Completo" },
+        { nombre: "Base Cama + Colchón Semi Ortopédico + Espaldar", descripcion: "Base cama reforzada con espaldar y colchón semi ortopédico. Ideal para descanso diario.", precio: 850000, img: "img/base-semi-850.jpg", badge: "Recomendado" },
+        { nombre: "Base Cama Modular Negra", descripcion: "Base cama modular color negro. Minimalista, resistente y fácil de armar. Solución económica.", precio: 160000, img: "img/base-modular-160.jpg", badge: "Económico" },
+        { nombre: "🔥 Combo Sencillo: Base + Espaldar + Colchón Ortopédico", descripcion: "Set básico completo: base cama, espaldar sencillo y colchón ortopédico. Perfecto para empezar.", precio: 580000, img: "img/colchon-1.jpg", badge: "Oferta" }
     ];
 
-    // Crear los reels
     const container = document.getElementById('reelsContainer');
     const indicador = document.getElementById('indicador');
 
@@ -291,13 +271,11 @@
         `;
         container.appendChild(reel);
 
-        // Indicador
         const dot = document.createElement('div');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
         indicador.appendChild(dot);
     });
 
-    // Actualizar indicador con el scroll
     container.addEventListener('scroll', () => {
         const h = container.clientHeight;
         const scrollTop = container.scrollTop;
@@ -307,7 +285,6 @@
             d.classList.toggle('active', i === idx);
         });
 
-        // Ocultar hint después del primer scroll
         const hint = document.getElementById('swipeHint');
         if (scrollTop > 10) {
             hint.style.opacity = '0';
@@ -315,7 +292,6 @@
         }
     });
 
-    // Detectar si es touch para mostrar hint
     if ('ontouchstart' in window) {
         document.getElementById('swipeHint').style.display = 'block';
     } else {
